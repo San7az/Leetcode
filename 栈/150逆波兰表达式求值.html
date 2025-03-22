@@ -1,0 +1,36 @@
+<script>
+  function evalRPN(tokens) {
+    let stack = []
+    for (let token of tokens) {
+      // 如果是数字，进栈
+      if (!isNaN(token)) {
+        stack.push(parseInt(token))
+      } else {
+        // 否则，从栈顶弹出两个操作数进行运算
+        // 栈为先进后出如果想要计算 a + b ,实际 b 先从栈顶弹出，然后再是a从栈顶弹出
+        let num2 = stack.pop()
+        let num1 = stack.pop()
+        switch (token) {
+          case '+':
+            stack.push(num1 + num2)
+            break
+          case '-':
+            stack.push(num1 - num2)
+            break
+          case '*':
+            stack.push(num1 * num2)
+            break
+          case '/':
+            stack.push(Math.trunc(num1 / num2))
+            break
+          default:
+            throw new Error('Invaild Operator')
+        }
+      }
+    }
+    return stack.pop()
+  }
+</script>
+<!-- isNan() 通过类型转换，判断转换后的数据类型是否为Number，是就返回true -->
+<!-- parseInt() 将字符串转换为十进制整数 -->
+<!-- Math.trunc() 去掉小数点，只保留整数部分 -->
