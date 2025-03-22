@@ -1,0 +1,14 @@
+<script>
+  var containsDuplicate = function (nums) {
+    const hashTable = new Map()
+    for (const num of nums) {
+      // 检查哈希表中是否有该元素
+      if (hashTable.has(num)) {
+        return true
+      }
+      //   如果该元素不存在，则将他添加进哈希表
+      hashTable.set(num, true)
+    }
+    return false
+  }
+</script>

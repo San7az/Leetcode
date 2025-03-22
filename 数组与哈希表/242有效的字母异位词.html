@@ -1,0 +1,54 @@
+<script>
+  var isAnagram = function (s, t) {
+    if (s.length !== t.length) {
+      return false
+    }
+    const mapS = {}
+    const mapT = {}
+    for (let i = 0; i < s.length; i++) {
+      mapS[s[i]] = (mapS[s[i]] || 0) + 1
+      mapT[t[i]] = (mapT[t[i]] || 0) + 1
+    }
+    for (let key in mapS) {
+      if (mapS[key] !== mapT[key]) {
+        return false
+      }
+    }
+    for (let key in mapT) {
+      if (mapS[key] === undefined) {
+        return false
+      }
+    }
+    return true
+  }
+</script>
+<!-- <script>
+  var isAnagram = function (s, t) {
+    const arrS = s.split('')
+    // console.log(arrS)
+
+    const arrT = t.split('')
+    if (arrS.length !== arrT.length) {
+      return false
+    }
+    let counterS = 0
+    for (let num of arrS) {
+      counterS = num.charCodeAt() + counterS
+    }
+    console.log(counterS)
+    let counterT = 0
+    for (let num of arrT) {
+      counterT = num.charCodeAt() + counterT
+    }
+    console.log(counterS)
+    console.log(counterT)
+    if (counterS === counterT) {
+      return true
+    } else {
+      return false
+    }
+    //会出现counter的值相等，但是字母组合不相等
+    // ggii eekk counter都是416
+  }
+  isAnagram('ggii', 'eekk')
+</script> -->

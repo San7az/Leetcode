@@ -1,0 +1,47 @@
+<script>
+  var MinStack = function () {
+    // 主栈
+    this.stack = []
+    // 辅助栈，用来追踪最小元素
+    this.minStack = []
+  }
+
+  /**
+   * @param {number} val
+   * @return {void}
+   */
+  MinStack.prototype.push = function (val) {
+    this.stack.push(val)
+    if (
+      this.minStack.length === 0 ||
+      val <= this.minStack[this.minStack.length - 1]
+    ) {
+      this.minStack.push(val)
+    }
+  }
+
+  /**
+   * @return {void}
+   */
+  MinStack.prototype.pop = function () {
+    let res = this.stack.pop()
+    // 如果弹出的元素等于辅助栈的栈顶元素,弹出辅助栈的栈顶元素
+    if (res === this.minStack[this.minStack.length - 1]) {
+      this.minStack.pop()
+    }
+  }
+
+  /**
+   * @return {number}
+   */
+  MinStack.prototype.top = function () {
+    return this.Stack[this.stack.length - 1]
+  }
+
+  /**
+   * @return {number}
+   */
+  MinStack.prototype.getMin = function () {
+    return this.minStack[this.minStack.length - 1]
+  }
+</script>

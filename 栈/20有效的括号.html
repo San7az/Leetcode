@@ -1,0 +1,30 @@
+<script>
+  var isValid = function (s) {
+    // 定义一个映射方便查找括号对应关系
+    const brackMap = {
+      ')': '(',
+      ']': '[',
+      '}': '{',
+    }
+    // 初始化一个栈
+    let stack = []
+    // 遍历字符串
+    for (let char of s) {
+      if (Object.values(brackMap).includes(char)) {
+        // 如果是左括号，则入栈
+        stack.push(char)
+        // 如果是右括号，则判断栈顶元素是否匹配
+      } else if (char in brackMap) {
+        if (stack.length === 0 || stack.pop() !== brackMap[char]) {
+          return false
+        }
+      }
+    }
+    if (stack.length === 0) {
+      return true
+    } else {
+      return false
+    }
+    // return stack.length === 0
+  }
+</script>
