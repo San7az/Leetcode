@@ -1,0 +1,13 @@
+<script>
+  var isPalindrome = function (s) {
+    // 去除非字母和数字，并将字母都转化为小写字母
+    let afterClean = s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()
+    // console.log(afterClean)
+
+    // 反转字符串
+    let reverseStr = afterClean.split('').reverse().join('')
+    return reverseStr === afterClean
+  }
+  isPalindrome('A man, a plan, a canal: Panama')
+</script>
+<!-- split() 方法接受一个模式，通过搜索模式将字符串分割成一个有序的子串列表，将这些子串放入一个数组，并返回该数组。 -->
