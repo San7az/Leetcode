@@ -1,0 +1,17 @@
+<script>
+  // 核心思想：
+  // 遍历数组，通过计算与target的差值，将差值作为key，当前索引作为value存入哈希表
+  // 第一次将差值作为key，当前索引作为value存入哈希表
+  // 当差值再次出现时，说明找到了两个数，根据第一次差值的索引和当前索引，返回结果
+  var twoSum = function (nums, target) {
+    const hashTable = {}
+    for (let i = 0; i < nums.length; i++) {
+      const difference = target - nums[i]
+      if (difference in hashTable) {
+        return [hashTable[difference], i]
+      }
+      hashTable[nums[i]] = i
+    }
+    return null
+  }
+</script>

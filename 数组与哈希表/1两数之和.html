@@ -1,0 +1,19 @@
+<script>
+  var twoSum = function (nums, target) {
+    let result = [] //用来存储结果
+    for (let i = 0; i < nums.length; i++) {
+      let j = i + 1
+      while (nums[i] + nums[j] !== target && j < nums.length) {
+        j++
+      }
+      if (j === nums.length) {
+        continue
+      }
+      if (nums[i] + nums[j] === target) {
+        result.push(i)
+        result.push(j)
+      }
+    }
+    return result
+  }
+</script>

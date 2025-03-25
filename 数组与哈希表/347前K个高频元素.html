@@ -1,0 +1,30 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @param {number} k
+   * @return {number[]}
+   */
+  // 核心思想：
+  // 使用Map存储数组元素出现的次数，键名为出现的数字，键值为出现的次数
+  // 然后根据次数进行降序排序，最后返回前k个的键名
+  var topKFrequent = function (nums, k) {
+    let map = new Map()
+    nums.forEach((key) => {
+      map[key] = (map[key] || 0) + 1
+    })
+    console.log(map)
+    let arr = Object.entries(map).map(([nums, frequent]) => [
+      parseInt(nums),
+      frequent,
+    ])
+    arr.sort((a, b) => b[1] - a[1])
+    // console.log(arr.splice(0, k))
+
+    // arr.splice(-1, arr.length - k).map((item) => item[0])
+
+    // let res = arr.slice(0, k).map((item) => item[0])
+    // console.log(arr)
+    return arr.splice(0, k).map((item) => item[0])
+  }
+  topKFrequent([1, 1, 1, 2, 2, 3], 2)
+</script>

@@ -1,0 +1,25 @@
+<script>
+  /**
+   * @param {string[]} strs
+   * @return {string[][]}
+   */
+  // 核心思想：
+  // 理解字母异位词的本质：
+  // 两个字符串是字母异位词，意味着它们包含相同的字符，只是字符的顺序不同。
+  // 这意味着，如果我们对两个字符串的字符进行排序，排序后的结果应该是相同的。
+  // 遍历数组，将数组中的每个字符串排序
+  // 然后根据排序后的字符串作为key，将字符串存入哈希表
+  var groupAnagrams = function (strs) {
+    let result = []
+    const strMap = new Map()
+    for (const str of strs) {
+      const sortedStr = str.split('').sort().join('')
+      if (!strMap.has(sortedStr)) {
+        strMap.set(sortedStr, [str])
+      } else {
+        strMap.get(sortedStr).push(str)
+      }
+    }
+    return Array.from(strMap.values())
+  }
+</script>
