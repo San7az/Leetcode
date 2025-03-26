@@ -38,3 +38,10 @@ Object.prototype.hasOwnProperty()
 //Object.entries() 静态方法返回一个数组
 // 包含给定对象自有的可枚举字符串键属性的键值对。
 Object.entries()
+
+// parseInt() 方法可解析一个字符串，并返回一个整数。
+parseInt(string, radix)
+
+//Math.floor() 函数总是返回小于等于一个给定数字的最大整数。
+console.log(Math.floor(5.95))
+// Expected output: 5

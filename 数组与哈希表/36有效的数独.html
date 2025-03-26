@@ -1,0 +1,37 @@
+<script>
+  // 难：计算数字属于哪一个小的九宫格
+  var isValidSudoku = function (board) {
+    const rows = Array.from({ length: 9 }, () => Array(9).fill(false))
+    const cols = Array.from({ length: 9 }, () => Array(9).fill(false))
+    const boxes = Array.from({ length: 9 }, () => Array(9).fill(false))
+    // 遍历数独
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (board[i][j] !== '.') {
+          // 将数字转化为索引
+          const pos = parseInt(board[i][j]) - 1
+          // 计算属于哪一个九宫格
+          const boxIndex = Math.floor(i / 3) * 3 + Math.floor(j / 3)
+          if (rows[i][pos] || cols[j][pos] || boxes[boxIndex][pos]) {
+            return false
+          }
+          rows[i][pos] = true
+          cols[j][pos] = true
+          boxes[boxIndex][pos] = true
+        }
+      }
+    }
+    return true
+  }
+  isValidSudoku([
+    ['5', '3', '.', '.', '7', '.', '.', '.', '.'],
+    ['6', '.', '.', '1', '9', '5', '.', '.', '.'],
+    ['.', '9', '8', '.', '.', '.', '.', '6', '.'],
+    ['8', '.', '.', '.', '6', '.', '.', '.', '3'],
+    ['4', '.', '.', '8', '.', '3', '.', '.', '1'],
+    ['7', '.', '.', '.', '2', '.', '.', '.', '6'],
+    ['.', '6', '.', '.', '.', '.', '2', '8', '.'],
+    ['.', '.', '.', '4', '1', '9', '.', '.', '5'],
+    ['.', '.', '.', '.', '8', '.', '.', '7', '9'],
+  ])
+</script>
