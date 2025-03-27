@@ -16,6 +16,8 @@
     for (const [pos, speed] of cars) {
       const time = (target - pos) / speed
       // 如果栈为空或者当前汽车的到达时间大于栈顶车队的到达时间，则形成新的车队
+      // 不需要判断time<fleet[]，因为cars数组已经按照降序进行排序
+      // 所以首先处理的元素一定是花费时间最少的
       if (fleet.length === 0 || fleet[fleet.length - 1] < time) {
         fleet.push(time)
       }
