@@ -1,0 +1,26 @@
+<script>
+  /**
+   * @param {number} target
+   * @param {number[]} position
+   * @param {number[]} speed
+   * @return {number}
+   * 使用单调递减栈来存储每个车队到达目标的时间。
+   * 当我们遇到一辆新汽车时，我们将其到达时间与栈顶的车队时间比较。
+   * 如果新汽车的到达时间小于等于栈顶车队的到达时间，这意味着它能够加入当前的车队。
+   * 否则，它将形成一个新的车队，因为它的到达时间比任何已有的车队都要晚。
+   */
+  var carFleet = function (target, position, speed) {
+    const cars = position.map((p, i) => [p, speed[i]])
+    cars.sort((a, b) => b[0] - a[0])
+    const fleet = []
+    for (const [pos, speed] of cars) {
+      const time = (target - pos) / speed
+      // 如果栈为空或者当前汽车的到达时间大于栈顶车队的到达时间，则形成新的车队
+      if (fleet.length === 0 || fleet[fleet.length - 1] < time) {
+        fleet.push(time)
+      }
+    }
+    return fleet.length
+  }
+  carFleet(12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3])
+</script>

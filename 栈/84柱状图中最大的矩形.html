@@ -1,13 +1,17 @@
 <script>
   var largestRectangleArea = function (heights) {
     let maxArea = 0
+    // stack单调栈，用来存储最高高度柱子的下标
     let stack = [-1] //哨兵，简化边界处理; 用来存储下标
     heights.push(0) //用来保证最后所有元素都出栈
     for (let i = 0; i < heights.length; i++) {
       while (heights[i] < heights[stack[stack.length - 1]]) {
+        // console.log(`第${i}次，stack的长度为${stack.length}`)
         let height = heights[stack.pop()]
         let width = i - stack[stack.length - 1] - 1
+        // console.log(`第${i}次，高度为${height},宽度为${width}`)
         maxArea = Math.max(maxArea, height * width)
+        // console.log(stack.length)
       }
       stack.push(i) //将下标压入栈
     }

@@ -22,7 +22,17 @@ Array.prototype.entries()
 
 // 迭代方法
 // map方法:返回一个新的数组,数组中的元素为经过回调函数处理后的值
-Array.prototype.map(() => {})
+// callbackFn
+// 该函数被调用时将传入以下参数：
+// element
+// 数组中当前正在处理的元素。
+// index
+// 正在处理的元素在数组中的索引。
+// array
+// 调用了 map() 的数组本身。
+// thisArg 可选
+// 执行 callbackFn 时用作 this 的值。
+Array.prototype.map((callbackFn, thisArg) => {})
 
 // filter方法:根据条件会返回一个新的数组
 Array.prototype.filter(() => {})
