@@ -1,0 +1,18 @@
+<script>
+  var twoSum = function (numbers, target) {
+    let left = 0,
+      right = numbers.length - 1
+    while (left < right) {
+      const sum = numbers[left] + numbers[right]
+      if (sum === target) {
+        // 题目返回值要求是数组下标从1开始，所以要+1
+        return [left + 1, right + 1]
+      }
+      if (sum > target) {
+        right--
+      } else {
+        left++
+      }
+    }
+  }
+</script>
