@@ -1,0 +1,13 @@
+<script>
+  var reverseWords = function (s) {
+    // 1.去除多余空格
+    // 用正则表达式 /s+/ 进行匹配，它会匹配字符串中相邻的所有空白字符，例如 " "。
+    const str = s.trim().replace(/\s+/g, ' ')
+    console.log(str)
+    const result = str.split(' ').reverse().join(' ')
+    console.log(result)
+    return result
+  }
+
+  reverseWords('a good   example')
+</script>

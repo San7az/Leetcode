@@ -1,0 +1,27 @@
+<script>
+  /**
+   * @param {number[]} height
+   * @return {number}
+   */
+  var trap = function (height) {
+    let left = 0,
+      right = height.length - 1,
+      leftMax = 0,
+      rightMax = 0,
+      totalRain = 0
+    while (left < right) {
+      if (height[left] <= height[right]) {
+        // 左侧柱子矮或者相等时，更新左侧最大高度并移动left指针
+        leftMax = Math.max(leftMax, height[left])
+        totalRain = totalRain + leftMax - height[left]
+        left++
+      } else {
+        // 右侧柱子矮时，更新右侧最大高度并移动right指针
+        rightMax = Math.max(rightMax, height[right])
+        totalRain = totalRain + rightMax - height[right]
+        right--
+      }
+    }
+    return totalRain
+  }
+</script>
