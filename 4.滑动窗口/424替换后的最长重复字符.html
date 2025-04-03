@@ -1,0 +1,27 @@
+<script>
+  /**
+   * @param {string} s
+   * @param {number} k
+   * @return {number}
+   */
+  var characterReplacement = function (s, k) {
+    let left = 0,
+      right = 0
+    let maxLength = 0,
+      maxCount = 0
+    const freq = {}
+    while (right < s.length) {
+      freq[s[right]] = (freq[s[right]] || 0) + 1
+      maxCount = Math.max(maxCount, freq[s[right]])
+      // 如果窗口内的字符种类数加上 k 次更改操作仍不足以覆盖窗口内的所有字符
+      if (right - left + 1 - maxCount - k > 0) {
+        // 收缩窗口
+        freq[s[left]]--
+        left++
+      }
+      maxLength = Math.max(maxLength, right - left + 1)
+      right++
+    }
+    return maxLength
+  }
+</script>

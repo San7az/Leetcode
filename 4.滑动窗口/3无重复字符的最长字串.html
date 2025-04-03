@@ -1,0 +1,21 @@
+<script>
+  /**
+   * @param {string} s
+   * @return {number}
+   */
+  var lengthOfLongestSubstring = function (s) {
+    let left = 0, // 左边界
+      maxLength = 0,
+      charMap = {} // 使用对象作为哈希表存储字符及其索引
+    for (let right = 0; right < s.length; right++) {
+      const currentChar = s[right]
+      // 如果当前字符在哈希表中且位置大于等于left，说明有重复，需要移动left
+      if (currentChar in charMap && charMap[currentChar] >= left) {
+        left = charMap[currentChar] + 1
+      }
+      charMap[currentChar] = right
+      maxLength = Math.max(maxLength, right - left + 1)
+    }
+    return maxLength
+  }
+</script>
