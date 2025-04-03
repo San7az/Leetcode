@@ -1,0 +1,50 @@
+<script>
+  /**
+   * @param {string} s
+   * @param {string} t
+   * @return {string}
+   */
+  var minWindow = function (s, t) {
+    // if (s.length < t.length) {
+    //   return ''
+    // }
+    const tMap = {},
+      windowMap = {}
+    let left = 0,
+      right = 0,
+      valid = 0,
+      resultLength = Infinity,
+      start = 0
+    for (let char of t) {
+      tMap[char] ? tMap[char]++ : (tMap[char] = 1)
+    }
+    while (right < s.length) {
+      const c = s[right]
+      right++
+      if (tMap[c]) {
+        windowMap[c] ? windowMap[c]++ : (windowMap[c] = 1)
+        if (windowMap[c] === tMap[c]) {
+          valid++
+        }
+      }
+      //  如果当前窗口有效，尝试缩小窗口
+      while (valid === Object.keys(tMap).length) {
+        if (right - left < resultLength) {
+          start = left
+          resultLength = right - left
+        }
+        const d = s[left]
+        left++
+        if (tMap[d]) {
+          if (tMap[d] === windowMap[d]) {
+            valid--
+          }
+          windowMap[d]--
+        }
+      }
+    }
+    return resultLength === Infinity
+      ? ''
+      : s.substring(start, start + resultLength)
+  }
+</script>

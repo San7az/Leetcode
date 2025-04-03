@@ -1,0 +1,38 @@
+<script>
+  /**
+   * @param {string} s1
+   * @param {string} s2
+   * @return {boolean}
+   */
+  var checkInclusion = function (s1, s2) {
+    if (s1.length > s2.length) {
+      return false
+    }
+    const map = new Map()
+    let window = s1.length
+    for (const char of s1) {
+      map.set(char, (map.get(char) || 0) + 1)
+    }
+    //i的终止条件为最后剩余元素===s1.length, i 指向s2, j 指向 window
+    for (let i = 0; i <= s2.length - window; i++) {
+      //重置计数映射
+      const tempMap = new Map(map) // 用来计数
+      for (let j = 0; j < window; j++) {
+        const char = s2[i + j]
+        if (tempMap.has(char)) {
+          tempMap.set(char, tempMap.get(char) - 1)
+          if (tempMap.get(char) === 0) {
+            tempMap.delete(char)
+          }
+        } else {
+          break
+        }
+      }
+      if (tempMap.size === 0) {
+        return true
+      }
+    }
+    return false
+  }
+  checkInclusion('ab', 'eidbaooo')
+</script>

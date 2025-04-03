@@ -41,13 +41,8 @@ Array.prototype.filter(() => {})
 // 将这些子串放入一个数组，并返回该数组。
 String.prototype.split = function (separator, limit) {}
 
-// hasOwnProperty() 方法返回一个布尔值
-// 表示对象自有属性（而不是继承来的属性）中是否具有指定的属性。
-Object.prototype.hasOwnProperty()
-
-//Object.entries() 静态方法返回一个数组
-// 包含给定对象自有的可枚举字符串键属性的键值对。
-Object.entries()
+//every() 方法测试一个数组内的所有元素是否都能通过指定函数的测试。它返回一个布尔值。
+Array.prototype.every(() => {})
 
 // parseInt() 方法可解析一个字符串，并返回一个整数。
 parseInt(string, radix)
