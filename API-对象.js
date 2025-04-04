@@ -2,6 +2,8 @@
 // 表示对象自有属性（而不是继承来的属性）中是否具有指定的属性。
 Object.prototype.hasOwnProperty()
 
+//Object.create() 静态方法以一个现有对象作为原型，创建一个新对象。
+Object.create()
 //Object.entries() 静态方法返回一个数组
 // 包含给定对象自有的可枚举字符串键属性的键值对。
 Object.entries()

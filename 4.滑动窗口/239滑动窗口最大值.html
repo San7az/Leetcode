@@ -4,5 +4,34 @@
    * @param {number} k
    * @return {number[]}
    */
-  var maxSlidingWindow = function (nums, k) {}
+  var maxSlidingWindow = function (nums, k) {
+    let q = [] // 双端队列，存储索引
+    let result = []
+    // 填充初始窗口
+    for (let i = 0; i < k; i++) {
+      // 确保队列中的元素始终是递减的
+      while (q.length > 0 && nums[i] >= nums[q[q.length - 1]]) {
+        q.pop()
+      }
+      q.push(i)
+    }
+
+    //滑动窗口
+    for (let i = k; i < nums.length; i++) {
+      result.push(nums[q[0]]) // 记录最大值
+      // 移除队列中不在窗口内的元素
+      while (q.length > 0 && q[0] <= i - k) {
+        q.shift()
+      }
+      // 维护队列递减
+      while (q.length > 0 && nums[i] >= nums[q[q.length - 1]]) {
+        q.pop()
+      }
+      q.push(i)
+    }
+    // 不要忘记最后一个窗口的最大值
+    result.push(nums[q[0]])
+    return result
+  }
+  maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3)
 </script>
