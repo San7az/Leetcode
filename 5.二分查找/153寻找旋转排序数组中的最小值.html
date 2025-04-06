@@ -1,0 +1,27 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   * 如果 nums[mid] >= nums[right]，说明从 mid 到 right 的子数组是升序的
+   * 但 mid 可能位于旋转点的左侧，最小元素肯定不在 [mid, right] 区间内
+   * 所以更新 left = mid + 1，继续在 [left, right) 的左半边查找。
+   * 如果 nums[mid] < nums[right]
+   * 说明最小元素位于 [left, mid] 区间内，包括 mid 本身
+   * 因为这表明旋转点在 mid 的右边
+   * 所以更新 right = mid，在 [left, mid] 区间内查找。
+   */
+  var findMin = function (nums) {
+    let left = 0,
+      right = nums.length - 1
+    while (left < right) {
+      let mid = Math.floor((left + right) / 2)
+      if (nums[mid] > nums[right]) {
+        left = mid + 1
+      } else {
+        right = mid
+      }
+    }
+    // left 和 right 相遇，此时left指向最小值
+    return nums[left]
+  }
+</script>

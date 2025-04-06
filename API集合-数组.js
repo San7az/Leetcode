@@ -50,3 +50,6 @@ parseInt(string, radix)
 //Math.floor() 函数总是返回小于等于一个给定数字的最大整数。
 console.log(Math.floor(5.95))
 // Expected output: 5
+
+// Math.ceil() 静态方法总是向上舍入，并返回大于等于给定数字的最小整数。
+Math.ceil()

@@ -1,0 +1,44 @@
+<script>
+  /**
+   * @param {number[][]} matrix
+   * @param {number} target
+   * @return {boolean}
+   * 非严格递增顺序:允许相邻元素相等 , 如 [1, 2, 2, 3, 4, 5]
+   */
+  var searchMatrix = function (matrix, target) {
+    let rowStart = 0,
+      rowEnd = matrix.length - 1
+    let rowMid
+    while (rowStart <= rowEnd) {
+      rowMid = Math.floor((rowStart + rowEnd) / 2)
+      if (
+        target >= matrix[rowMid][0] &&
+        target <= matrix[rowMid][matrix[rowMid].length - 1]
+      ) {
+        break
+      } else if (target < matrix[rowMid][0]) {
+        rowEnd = rowMid - 1
+      } else {
+        rowStart = rowMid + 1
+      }
+    }
+    if (rowStart > rowEnd) {
+      return false
+    }
+
+    // 二分查找行内元素
+    let colStart = 0,
+      colEnd = matrix[rowMid].length - 1
+    while (colStart <= colEnd) {
+      let colMid = Math.floor((colStart + colEnd) / 2)
+      if (matrix[rowMid][colMid] === target) {
+        return true
+      } else if (matrix[rowMid][colMid] < target) {
+        colStart = colMid + 1
+      } else {
+        colEnd = colMid - 1
+      }
+    }
+    return false
+  }
+</script>
