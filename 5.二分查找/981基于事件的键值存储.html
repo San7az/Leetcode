@@ -1,0 +1,47 @@
+<script>
+  var TimeMap = function () {
+    this.map = new Map()
+  }
+
+  /**
+   * @param {string} key
+   * @param {string} value
+   * @param {number} timestamp
+   * @return {void}
+   */
+  TimeMap.prototype.set = function (key, value, timestamp) {
+    if (!this.map.has(key)) {
+      this.map.set(key, []) // 如果键名不存在，创建新的
+    }
+    this.map.get(key).push([timestamp, value])
+  }
+
+  /**
+   * @param {string} key
+   * @param {number} timestamp
+   * @return {string}
+   */
+  TimeMap.prototype.get = function (key, timestamp) {
+    if (!this.map.has(key)) {
+      return ''
+    }
+    // 获取键的列表
+    const list = this.map.get(key)
+    let left = 0,
+      right = list.length - 1
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2)
+      const [ts, val] = list[mid]
+      if (ts === timestamp) {
+        return val
+      } else if (ts < timestamp) {
+        left = mid + 1
+      } else {
+        right = mid - 1
+      }
+    }
+    // 当 left > right 时，right 指向了最后一个时间戳小于等于目标时间戳的元素
+    // 返回最近的时间戳对应的值，若没有则返回空字符串
+    return list[right] ? list[right][1] : ''
+  }
+</script>

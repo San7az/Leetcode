@@ -1,0 +1,23 @@
+<script>
+  /**
+   * @param {number[]} nums1
+   * @param {number[]} nums2
+   * @return {number}
+   */
+  var findMedianSortedArrays = function (nums1, nums2) {
+    if (nums1.length > nums2.length) {
+      return findMedianSortedArrays(nums2, nums1)
+    }
+    // x 为长数组长度，y 为短数组长度
+    const x = nums1.length,
+      y = nums2.length
+    let low = 0,
+      high = x
+    while (low <= high) {
+      const partitionX = Math.floor((low + high) / 2)
+
+      // 求中位数右边元素个数
+      const partitionY = Math.floor((x + y - 1) / 2) - partitionX
+    }
+  }
+</script>

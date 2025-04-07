@@ -1,0 +1,45 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @param {number} target
+   * @return {number}
+   */
+  var search = function (nums, target) {
+    let pivot = findPivot(nums)
+    if (pivot === 0) {
+      return binarySearch(nums, 0, nums.length - 1, target)
+    }
+    if (target >= nums[0]) {
+      return binarySearch(nums, 0, pivot - 1, target)
+    } else {
+      return binarySearch(nums, pivot, nums.length - 1, target)
+    }
+  }
+  function findPivot(arr) {
+    let left = 0,
+      right = arr.length - 1
+    while (left < right) {
+      let mid = Math.floor((left + right) / 2)
+      if (arr[mid] > arr[right]) {
+        //说明中间值属于第一部分（较大的部分），旋转点一定在右侧
+        left = mid + 1
+      } else {
+        right = mid
+      }
+    }
+    return left
+  }
+  function binarySearch(arr, left, right, target) {
+    while (left <= right) {
+      let mid = Math.floor((left + right) / 2)
+      if (arr[mid] === target) {
+        return mid
+      } else if (arr[mid] > target) {
+        right = mid - 1
+      } else {
+        left = mid + 1
+      }
+    }
+    return -1
+  }
+</script>
