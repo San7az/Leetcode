@@ -1,0 +1,44 @@
+<script>
+  /**
+   * Definition for singly-linked list.
+   * function ListNode(val, next) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.next = (next===undefined ? null : next)
+   * }
+   */
+  /**
+   * @param {ListNode} head
+   * @return {boolean}
+   */
+  var isPalindrome = function (head) {
+    // 快慢指针找到中间节点
+    let fast = head,
+      slow = head
+    while (fast && fast.next) {
+      slow = slow.next
+      fast = fast.next.next
+    }
+
+    // 反转后半部分链表
+    let current = slow,
+      prev = null
+    while (current) {
+      let next = current.next
+      current.next = prev
+      prev = current
+      current = next
+    }
+    // 结束循环后，prev指向的是反转链表后的第一个节点
+    // 比较前半部分和反转的后半部分
+    let left = head,
+      right = prev
+    while (right) {
+      if (left.val !== right.val) {
+        return false
+      }
+      left = left.next
+      right = right.next
+    }
+    return true
+  }
+</script>
