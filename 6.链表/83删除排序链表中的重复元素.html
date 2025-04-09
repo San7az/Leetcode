@@ -1,0 +1,25 @@
+<script>
+  /**
+   * Definition for singly-linked list.
+   * function ListNode(val, next) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.next = (next===undefined ? null : next)
+   * }
+   */
+  /**
+   * @param {ListNode} head
+   * @return {ListNode}
+   */
+  var deleteDuplicates = function (head) {
+    let fakeHead = head
+    while (fakeHead && fakeHead.next) {
+      // 遇到重复的就跳过
+      if (fakeHead.val === fakeHead.next.val) {
+        fakeHead.next = fakeHead.next.next
+      } else {
+        fakeHead = fakeHead.next
+      }
+    }
+    return head
+  }
+</script>

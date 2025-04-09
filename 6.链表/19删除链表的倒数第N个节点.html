@@ -1,0 +1,34 @@
+<script>
+  /**
+   * Definition for singly-linked list.
+   * function ListNode(val, next) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.next = (next===undefined ? null : next)
+   * }
+   */
+  /**
+   * @param {ListNode} head
+   * @param {number} n
+   * @return {ListNode}
+   */
+  var removeNthFromEnd = function (head, n) {
+    // 创建一个哑节点，防止出现删除头节点是出现越界情况
+    let dummy = new ListNode()
+    dummy.next = head
+    let slow = dummy,
+      fast = dummy
+
+    // 让fast先走n+1步，因为dummy的存在，所以fast走到n步时，slow恰好在正确的位置
+    for (let i = 0; i <= n; i++) {
+      fast = fast.next
+    }
+
+    // 现在两个指针一起走，当fast走到链表尾部时，slow刚好在待删节点的前一个位置
+    while (fast !== null) {
+      fast = fast.next
+      slow = slow.next
+    }
+    slow.next = slow.next.next
+    return dummy.next
+  }
+</script>

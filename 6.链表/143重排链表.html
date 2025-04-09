@@ -1,0 +1,49 @@
+<script>
+  /**
+   * Definition for singly-linked list.
+   * function ListNode(val, next) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.next = (next===undefined ? null : next)
+   * }
+   */
+  /**
+   * @param {ListNode} head
+   * @return {void} Do not return anything, modify head in-place instead.
+   */
+  var reorderList = function (head) {
+    if (!head || !head.next) {
+      return
+    }
+    let slow = head,
+      fast = head
+    // 找到中间节点
+    while (fast.next && fast.next.next) {
+      slow = slow.next
+      fast = fast.next.next
+    }
+
+    // 反转后半部分链表
+    let secondHalf = slow.next
+    let prev = null
+    slow.next = null
+    while (secondHalf) {
+      let next = secondHalf.next
+      secondHalf.next = prev
+      prev = secondHalf
+      secondHalf = next
+    }
+    // 反转完以后，prev指向反转后的头节点
+
+    // 合并两个链表
+    let first = head,
+      second = prev
+    while (second) {
+      let t1 = first.next,
+        t2 = second.next
+      first.next = second
+      second.next = t1
+      first = t1
+      second = t2
+    }
+  }
+</script>
