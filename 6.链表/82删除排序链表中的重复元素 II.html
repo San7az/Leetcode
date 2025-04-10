@@ -1,0 +1,32 @@
+<script>
+  /**
+   * Definition for singly-linked list.
+   * function ListNode(val, next) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.next = (next===undefined ? null : next)
+   * }
+   */
+  /**
+   * @param {ListNode} head
+   * @return {ListNode}
+   */
+  var deleteDuplicates = function (head) {
+    let dummy = new ListNode(0, head)
+    let prev = dummy
+    let curr = head
+    while (curr && curr.next) {
+      // 如果当前节点和下一个节点值相等，跳过，并且改变指针
+      if (curr.val === curr.next.val) {
+        // 找到下一个不同的节点
+        while (curr.next && curr.val === curr.next.val) {
+          curr = curr.next
+        }
+        prev.next = curr.next
+      } else {
+        prev = prev.next
+      }
+      curr = curr.next
+    }
+    return dummy.next
+  }
+</script>
