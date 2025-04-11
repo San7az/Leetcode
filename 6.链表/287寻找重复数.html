@@ -1,0 +1,21 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   * 此题可以利用Floyd判圈算法（龟兔赛跑算法）来解决
+   * 这个算法通常用于检测链表中是否存在环，
+   * 我们可以将其应用于数组中来寻找重复的数字。
+   * 这个方法的关键在于把数组看作是一个有向图，其中每个数字都是一个节点
+   * 而数字的值指示了从当前节点到下一个节点的边。
+   */
+  var findDuplicate = function (nums) {
+    // 步骤1：使用Floyd判圈算法检测周期（周期检测）
+    let tortoise = nums[0],
+      hare = nums[0]
+    do {
+      tortoise = nums[tortoise]
+      hare = nums[nums[hare]]
+    } while (tortoise !== hare)
+    return hare
+  }
+</script>
