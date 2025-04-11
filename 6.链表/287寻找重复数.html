@@ -15,7 +15,12 @@
     do {
       tortoise = nums[tortoise]
       hare = nums[nums[hare]]
-    } while (tortoise !== hare)
+    } while (tortoise !== hare) //; do..while 后面必须加一个分号
+    tortoise = nums[0]
+    while (tortoise !== hare) {
+      tortoise = nums[tortoise]
+      hare = nums[hare]
+    }
     return hare
   }
 </script>
