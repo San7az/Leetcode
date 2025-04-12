@@ -1,0 +1,83 @@
+<script>
+  class Node {
+    constructor(key, value) {
+      this.key = key
+      this.value = value
+      this.prev = null
+      this.next = null
+    }
+  }
+  /**
+   * @param {number} capacity
+   */
+  var LRUCache = function (capacity) {
+    this.capacity = capacity
+    this.hashMap = new Map()
+    this.head = new Node() // 头节点 无数据
+    this.tail = new Node() // 尾节点 无数据
+    this.head.next = this.tail
+    this.tail.prev = this.head
+  }
+
+  /**
+   * @param {number} key
+   * @return {number}
+   */
+  LRUCache.prototype.get = function (key) {
+    if (!this.hashMap.has(key)) {
+      return -1
+    } else {
+      const node = this.hashMap.get(key)
+      this.moveToHead(node)
+      return node.value
+    }
+  }
+
+  /**
+   * @param {number} key
+   * @param {number} value
+   * @return {void}
+   */
+  LRUCache.prototype.put = function (key, value) {
+    if (this.hashMap.has(key)) {
+      const node = this.hashMap.get(key)
+      node.value = value
+      this.moveToHead(node)
+    } else {
+      const newNode = new Node(key, value)
+      this.hashMap.set(key, newNode)
+      this.addToHead(newNode)
+      if (this.hashMap.size > this.capacity) {
+        const removedNode = this.removeTail()
+        this.hashMap.delete(removedNode.key)
+      }
+    }
+  }
+
+  LRUCache.prototype.moveToHead = function (node) {
+    this.removeNode(node)
+    this.addToHead(node)
+  }
+  LRUCache.prototype.addToHead = function (node) {
+    node.prev = this.head
+    node.next = this.head.next
+    this.head.next.prev = node
+    this.head.next = node
+  }
+  LRUCache.prototype.removeNode = function (node) {
+    node.prev.next = node.next
+    node.next.prev = node.prev
+  }
+  LRUCache.prototype.removeTail = function () {
+    const removedNode = this.tail.prev
+    this.removeNode(removedNode)
+    return removedNode
+  }
+
+  /**
+   * Your LRUCache object will be instantiated and called as such:
+   * var obj = new LRUCache(capacity)
+   * var param_1 = obj.get(key)
+   * obj.put(key,value)
+   */
+</script>
