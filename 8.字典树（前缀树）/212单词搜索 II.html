@@ -1,0 +1,61 @@
+<script>
+  /**
+   * @param {character[][]} board
+   * @param {string[]} words
+   * @return {string[]}
+   */
+  var findWords = function (board, words) {
+    const root = {}
+    const result = []
+
+    // 构建字典树
+    words.forEach((word) => {
+      let node = root
+      for (const char of word) {
+        if (!node[char]) {
+          node[char] = {}
+        }
+        node = node[char]
+      }
+      node.end = word
+    })
+
+    // dfs
+    const dfs = (node, i, j, str) => {
+      const char = board[i][j]
+      if (char === '#' || !node[char]) {
+        return
+      }
+      str += char
+      node = node[char]
+      if (node.end) {
+        result.push(node.end)
+        delete node.end
+      }
+
+      // 四个方向搜索
+      const directions = [
+        [0, 1],
+        [0, -1],
+        [1, 0],
+        [-1, 0],
+      ]
+      directions.forEach(([dx, dy]) => {
+        const ni = i + dx
+        const nj = j + dy
+        if (ni >= 0 && ni < board.length && nj >= 0 && nj < board[0].length) {
+          board[i][j] = '#' // 标记为已访问
+          dfs(node, ni, nj, str)
+          board[i][j] = char // 恢复原始状态
+        }
+      })
+    }
+    // 遍历整个板子
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[0].length; j++) {
+        dfs(root, i, j, '')
+      }
+    }
+    return result
+  }
+</script>
