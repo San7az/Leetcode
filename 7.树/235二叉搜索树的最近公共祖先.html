@@ -1,0 +1,36 @@
+<script>
+  /**
+   * Definition for a binary tree node.
+   * function TreeNode(val) {
+   *     this.val = val;
+   *     this.left = this.right = null;
+   * }
+   */
+
+  /**
+   * @param {TreeNode} root
+   * @param {TreeNode} p
+   * @param {TreeNode} q
+   * @return {TreeNode}
+   */
+
+  class TreeNode {
+    constructor(val, left = null, right = null) {
+      this.val = val
+      this.left = left
+      this.right = right
+    }
+  }
+  var lowestCommonAncestor = function (root, p, q) {
+    if (p.val < root.val && q.val < root.val) {
+      // 如果p和q都小于root的值，说明它们都在root的左子树中
+      return lowestCommonAncestor(root.left, p, q)
+    } else if (p.val > root.val && q.val > root.val) {
+      // 如果p和q都大于root的值，说明它们都在root的右子树中
+      return lowestCommonAncestor(root.right, p, q)
+    } else {
+      // 如果p和q一个在root的左边一个在右边，或者p/q其中之一就是root，那么root就是最近公共祖先
+      return root
+    }
+  }
+</script>
