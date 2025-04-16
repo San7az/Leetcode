@@ -1,0 +1,39 @@
+<script>
+  /**
+   * Definition for a binary tree node.
+   * function TreeNode(val, left, right) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.left = (left===undefined ? null : left)
+   *     this.right = (right===undefined ? null : right)
+   * }
+   */
+  /**
+   * @param {TreeNode} root
+   * @return {boolean}
+   */
+  class TreeNode {
+    constructor(val, left = null, right = null) {
+      this.val = val
+      this.left = left
+      this.right = right
+    }
+  }
+  function isBalanced(root) {
+    return isBalancedHelper(root)[0]
+  }
+  function isBalancedHelper(node) {
+    if (!node) return [true, 0] // 空树，高度为0，平衡
+
+    const [leftBalanced, leftHeight] = isBalancedHelper(node.left)
+    const [rightBalanced, rightHeight] = isBalancedHelper(node.right)
+
+    // 当前节点是否平衡的判断依据
+    const balanced =
+      leftBalanced && rightBalanced && Math.abs(leftHeight - rightHeight) <= 1
+
+    // 当前子树的高度
+    const height = Math.max(leftHeight, rightHeight) + 1
+
+    return [balanced, height]
+  }
+</script>
