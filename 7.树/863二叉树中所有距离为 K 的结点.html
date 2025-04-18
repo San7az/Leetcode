@@ -1,0 +1,46 @@
+<script>
+  /**
+   * Definition for a binary tree node.
+   * function TreeNode(val) {
+   *     this.val = val;
+   *     this.left = this.right = null;
+   * }
+   */
+  /**
+   * @param {TreeNode} root
+   * @param {TreeNode} target
+   * @param {number} k
+   * @return {number[]}
+   */
+  var distanceK = function (root, target, k) {
+    const parentMap = new Map()
+    const result = []
+    // 辅助函数，使用 DFS 构建节点到父节点的映射
+    function buildParentMap(node, parent) {
+      if (node !== null) {
+        parentMap.set(node, parent)
+        buildParentMap(node.left, node)
+        buildParentMap(node.right, node)
+      }
+    }
+
+    // 辅助函数，从给定节点开始查找距离为 k 的所有节点
+    function findNodesAtDistanceK(node, distance, visited) {
+      if (node === null || distance < 0 || visited.has(node)) {
+        return
+      }
+      visited.add(node) // 标记当前节点为已访问
+      if (distance === 0) {
+        result.push(node.val)
+        return
+      }
+      findNodesAtDistanceK(node.left, distance - 1, visited)
+      findNodesAtDistanceK(node.right, distance - 1, visited)
+      findNodesAtDistanceK(parentMap.get(node), distance - 1, visited)
+    }
+
+    buildParentMap(root, null)
+    findNodesAtDistanceK(target, k, new Set())
+    return result
+  }
+</script>
