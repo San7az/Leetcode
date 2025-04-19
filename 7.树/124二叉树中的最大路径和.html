@@ -1,0 +1,31 @@
+<script>
+  /**
+   * Definition for a binary tree node.
+   * function TreeNode(val, left, right) {
+   *     this.val = (val===undefined ? 0 : val)
+   *     this.left = (left===undefined ? null : left)
+   *     this.right = (right===undefined ? null : right)
+   * }
+   */
+  /**
+   * @param {TreeNode} root
+   * @return {number}
+   */
+  var maxPathSum = function (root) {
+    let maxSum = -Infinity
+    function maxPathDown(node) {
+      if (node === null) {
+        return 0
+      }
+      // 左右子树的最大向下路径和
+      const leftMax = Math.max(maxPathDown(node.left), 0)
+      const rightMax = Math.max(maxPathDown(node.right), 0)
+      // 更新全局最大路径和
+      maxSum = Math.max(maxSum, leftMax + rightMax + node.val)
+      // 返回以当前节点为根的最大向下路径和
+      return node.val + Math.max(leftMax, rightMax)
+    }
+    maxPathDown(root)
+    return maxSum
+  }
+</script>
