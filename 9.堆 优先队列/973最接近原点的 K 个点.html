@@ -1,0 +1,16 @@
+<script>
+  /**
+   * @param {number[][]} points
+   * @param {number} k
+   * @return {number[][]}
+   */
+  var kClosest = function (points, k) {
+    // 先计算所有点的距离并将其与原点的距离一起存储
+    const distPoints = points.map((point) => ({
+      dist: Math.sqrt(point[0] ** 2 + point[1] ** 2),
+      point: point,
+    }))
+    distPoints.sort((a, b) => a.dist - b.dist)
+    return distPoints.slice(0, k).map((item) => item.point)
+  }
+</script>
