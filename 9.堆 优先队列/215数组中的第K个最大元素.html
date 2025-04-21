@@ -1,0 +1,42 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @param {number} k
+   * @return {number}
+   */
+  function heapify(arr, n, i) {
+    let smallest = i // 初始化根节点为最小值
+    let left = 2 * i + 1
+    let right = 2 * i + 2
+    if (left < n && arr[left] < arr[smallest]) {
+      smallest = left
+    }
+    if (right < n && arr[right] < arr[smallest]) {
+      smallest = right
+    }
+    // 如果smallest不是根节点，则交换它们并继续heapify
+    if (smallest !== i) {
+      ;[arr[i], arr[smallest]] = [arr[smallest], arr[i]]
+      heapify(arr, n, smallest) // 递归heapify受影响的子树
+    }
+  }
+  function buildMinHeap(arr) {
+    const n = arr.length
+    // 从最后一个非叶子节点开始heapify
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+      heapify(arr, n, i)
+    }
+  }
+  var findKthLargest = function (nums, k) {
+    let minHeap = nums.slice(0, k)
+    buildMinHeap(minHeap)
+    // 遍历剩余元素
+    for (let i = k; i < nums.length; i++) {
+      if (nums[i] > minHeap[0]) {
+        minHeap[0] = nums[i]
+        heapify(minHeap, k, 0)
+      }
+    }
+    return minHeap[0]
+  }
+</script>

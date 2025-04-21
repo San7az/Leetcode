@@ -1,0 +1,92 @@
+<script>
+  var Twitter = function () {
+    this.users = {}
+    this.tweets = []
+    this.tweetCount = 0
+  }
+
+  /**
+   * @param {number} userId
+   * @param {number} tweetId
+   * @return {void}
+   */
+  Twitter.prototype.postTweet = function (userId, tweetId) {
+    if (!this.users[userId]) {
+      this.users[userId] = { tweets: [], follows: [userId] }
+    }
+    this.tweets.push({
+      id: tweetId,
+      userId,
+      timestamp: this.tweetCount++,
+    })
+    this.users[userId].tweets.push({
+      id: tweetId,
+      timestamp: this.tweetCount - 1,
+    })
+  }
+
+  /**
+   * @param {number} userId
+   * @return {number[]}
+   */
+  Twitter.prototype.getNewsFeed = function (userId) {
+    if (!this.users[userId]) {
+      return []
+    }
+    let feed = []
+    for (let followingUserId of this.users[userId].follows) {
+      if (this.users[followingUserId]) {
+        feed = feed.concat(this.users[followingUserId].tweets)
+      }
+    }
+    feed.sort((a, b) => b.timestamp - a.timestamp)
+    return feed.slice(0, 10).map((tweet) => tweet.id)
+  }
+
+  /**
+   * @param {number} followerId
+   * @param {number} followeeId
+   * @return {void}
+   */
+  Twitter.prototype.follow = function (followerId, followeeId) {
+    if (!this.users[followerId]) {
+      this.users[followerId] = { tweets: [], follows: [] }
+    }
+    if (!this.users[followeeId]) {
+      this.users[followeeId] = { tweets: [], follows: [followeeId] }
+    }
+    if (
+      followerId !== followeeId &&
+      !this.users[followerId].follows.includes(followeeId)
+    ) {
+      this.users[followerId].follows.push(followeeId)
+    }
+  }
+
+  /**
+   * @param {number} followerId
+   * @param {number} followeeId
+   * @return {void}
+   */
+  Twitter.prototype.unfollow = function (followerId, followeeId) {
+    if (
+      this.users[followerId] &&
+      this.users[followeeId] &&
+      followerId !== followeeId &&
+      this.users[followerId].follows.includes(followeeId)
+    ) {
+      this.users[followerId].follows = this.users[followerId].follows.filter(
+        (id) => id !== followeeId
+      )
+    }
+  }
+
+  /**
+   * Your Twitter object will be instantiated and called as such:
+   * var obj = new Twitter()
+   * obj.postTweet(userId,tweetId)
+   * var param_2 = obj.getNewsFeed(userId)
+   * obj.follow(followerId,followeeId)
+   * obj.unfollow(followerId,followeeId)
+   */
+</script>

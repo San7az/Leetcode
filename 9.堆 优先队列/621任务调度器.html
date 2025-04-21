@@ -1,0 +1,34 @@
+<script>
+  /**
+   * @param {character[]} tasks
+   * @param {number} n
+   * @return {number}
+   */
+  var leastInterval = function (tasks, n) {
+    // 初始化一个大小为26的数组，用来统计每个字母任务出现的次数。
+    const taskCounts = new Array(26).fill(0)
+
+    // 遍历任务列表，统计每个任务的出现次数
+    for (const task of tasks) {
+      taskCounts[task.charCodeAt(0) - 'A'.charCodeAt(0)]++
+    }
+    // 找出频率最高的任务的频率
+    let maxCount = Math.max(...taskCounts)
+    // 计算频率最高的任务数量
+    let maxTaskCount = taskCounts.filter((count) => count === maxCount).length
+    // 计算除了最后一个周期外，其他周期中最大频率任务的个数。
+    let partCount = maxCount - 1
+    // 计算除了最大频率任务之外，每个周期中需要的其他任务或空闲插槽数量。
+    let partLength = n - (maxTaskCount - 1)
+    // 计算所有周期中空闲插槽的总数。
+    let emptySlots = partCount * partLength
+    // 计算除了最大频率任务之外的所有任务的总数。
+    let availableTasks = tasks.length - maxCount * maxTaskCount
+    // 计算实际需要的空闲插槽数量
+    // 如果emptySlots大于availableTasks
+    // 则实际需要的空闲插槽数量为emptySlots - availableTasks。
+    let idles = Math.max(0, emptySlots - availableTasks)
+    // 返回完成所有任务所需的最少时间，等于所有任务的执行时间加上必要空闲插槽数量。
+    return tasks.length + idles
+  }
+</script>
