@@ -1,0 +1,133 @@
+<script>
+  /**
+   * @param {number[][]} intervals
+   * @param {number[]} queries
+   * @return {number[]}
+   */
+  class MaxHeap {
+    constructor() {
+      this.heap = []
+    }
+    // 向堆中插入一个值
+    insert(value) {
+      this.heap.push(value)
+      this.bubbleUp(this.heap.length - 1)
+    }
+
+    // 上浮操作，保持堆的性质
+    bubbleUp(index) {
+      while (index > 0) {
+        let element = this.heap[index]
+        let parentIndex = Math.floor((index - 1) / 2)
+        let parent = this.heap[parentIndex]
+
+        if (parent[0] >= element[0]) {
+          break
+        }
+        this.heap[index] = parent
+        this.heap[parentIndex] = element
+        index = parentIndex
+      }
+    }
+
+    // 获取堆顶值
+    extractMax() {
+      const max = this.heap[0]
+      const end = this.heap.pop()
+      if (this.heap.length > 0) {
+        this.heap[0] = end
+        this.sinkDown(0)
+      }
+      return max
+    }
+
+    // 下沉操作，保持堆的性质
+    sinkDown(index) {
+      let length = this.heap.length
+      let element = this.heap[index]
+      while (true) {
+        let leftChildIndex = 2 * index + 1
+        let rightChildIndex = 2 * index + 2
+        let leftChild, rightChild
+        let swap = null
+
+        if (leftChildIndex < length) {
+          leftChild = this.heap[leftChildIndex]
+          if (leftChild[0] > element[0]) {
+            swap = leftChildIndex
+          }
+        }
+
+        if (rightChildIndex < length) {
+          rightChild = this.heap[rightChildIndex]
+          if (
+            (swap === null && rightChild[0] > element[0]) ||
+            (swap !== null && rightChild[0] > leftChild[0])
+          ) {
+            swap = rightChildIndex
+          }
+        }
+
+        if (swap === null) {
+          break
+        }
+        this.heap[index] = this.heap[swap]
+        this.heap[swap] = element
+        index = swap
+      }
+    }
+
+    // 获取栈顶元素
+    peek() {
+      return this.heap[0]
+    }
+  }
+  var minInterval = function (intervals, queries) {
+    intervals.sort((a, b) => a[0] - b[0])
+
+    // 创建一个数组来存储查询点的原始索引
+    let queryIndex = queries.map((_, i) => i)
+
+    // 对原始索引数组进行排序
+    queryIndex.sort((a, b) => queries[a] - queries[b])
+
+    // 对查询点按照值排序
+    queries = queries.slice().sort((a, b) => a - b)
+
+    // 初始化结果数组
+    let res = new Array(queries.length).fill(-1)
+
+    // 初始化指针，用于遍历区间
+    let i = 0
+
+    // 创建最大堆实例
+    let maxHeap = new MaxHeap()
+
+    // 遍历排序后的查询点索引
+    for (let qi = 0; qi < queries.length; qi++) {
+      // 插入所有开始点小于等于当前查询点的区间到堆中
+      while (i < intervals.length && intervals[i][0] <= queries[qi]) {
+        let len = intervals[i][1] - intervals[i][0] + 1
+        maxHeap.insert([-len, intervals[i][0], intervals[i][1]])
+        i++
+      }
+
+      // 移除堆中所有结束点小于当前查询点的区间
+      while (maxHeap.peek() && maxHeap.peek()[2] < queries[qi]) {
+        maxHeap.extractMax()
+      }
+
+      // 如果堆非空，获取最短区间的长度
+      if (maxHeap.heap.length > 0) {
+        res[qi] = -maxHeap.peek()[0]
+      }
+    }
+    // 创建一个新数组，用于存放最终结果
+    let finalRes = new Array(queries.length).fill(-1)
+    // 将结果重新映射回原始查询点的顺序
+    for (let i = 0; i < queryIndex.length; i++) {
+      finalRes[queryIndex[i]] = res[i]
+    }
+    return finalRes
+  }
+</script>

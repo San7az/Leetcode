@@ -1,0 +1,27 @@
+<script>
+  /**
+   * @param {number[][]} intervals
+   * @return {number[][]}
+   */
+  var merge = function (intervals) {
+    // 按照区间起始位置排序
+    intervals.sort((a, b) => a[0] - b[0])
+
+    // 初始化结果数组，至少包含第一个区间
+    const merged = [intervals[0]]
+
+    // 遍历排序后的区间列表
+    for (let i = 0; i < intervals.length; i++) {
+      const current = intervals[i]
+      const lastMerged = merged[merged.length - 1]
+      // 如果当前区间的起始位置在上一区间结束位置之后，说明无重叠，直接添加
+      if (current[0] > lastMerged[1]) {
+        merged.push(current)
+      } else {
+        // 否则，有重叠，更新上一区间的结束位置
+        lastMerged[1] = Math.max(current[1], lastMerged[1])
+      }
+    }
+    return merged
+  }
+</script>
