@@ -1,0 +1,15 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var maxSubArray = function (nums) {
+    let maxSoFar = nums[0] // 用于存储目前最大子数组和
+    let maxEndingHere = nums[0] // 用于存储以当前元素结尾的最大子数组和
+    for (let i = 1; i < nums.length; i++) {
+      maxEndingHere = Math.max(maxEndingHere + nums[i], nums[i])
+      maxSoFar = Math.max(maxSoFar, maxEndingHere)
+    }
+    return maxSoFar
+  }
+</script>

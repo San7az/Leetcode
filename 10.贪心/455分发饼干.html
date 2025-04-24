@@ -1,0 +1,25 @@
+<script>
+  /**
+   * @param {number[]} g
+   * @param {number[]} s
+   * @return {number}
+   */
+  var findContentChildren = function (g, s) {
+    // 进行升序排序
+    g.sort((a, b) => a - b)
+    s.sort((a, b) => a - b)
+
+    let satisfied = 0
+    let childIndex = 0
+    let cookieIndex = 0
+    // 遍历饼干
+    while (cookieIndex < s.length && childIndex < g.length) {
+      if (s[cookieIndex] >= g[childIndex]) {
+        satisfied++
+        childIndex++
+      }
+      cookieIndex++
+    }
+    return satisfied
+  }
+</script>
