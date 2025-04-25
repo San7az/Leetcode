@@ -1,0 +1,40 @@
+<script>
+  /**
+   * @param {number[]} hand
+   * @param {number} groupSize
+   * @return {boolean}
+   */
+  var isNStraightHand = function (hand, groupSize) {
+    if (hand.length % groupSize !== 0) {
+      return false
+    }
+    const cardCount = {}
+    hand.forEach((item) => {
+      cardCount[item] = (cardCount[item] || 0) + 1
+    })
+    // Object.keys 始终返回字符串数组。
+    // 如果直接对字符串数组 .sort()
+    // 默认是按“字典序”排序'10' < '2'，结果会是 ['1','10','2']。
+    // 先用 map(Number) 把每项都从 '1' → 1、'10' → 10
+    // 再用数字比较的 .sort((a,b)=>a-b)，才能得到真正的数值顺序： [1,2,10]。
+    const keys = Object.keys(cardCount)
+      .map(Number)
+      .sort((a, b) => a - b)
+
+    while (keys.length) {
+      const currentKey = keys[0]
+      for (let i = 0; i < groupSize; i++) {
+        const key = currentKey + i
+        if (!cardCount[key]) {
+          return false
+        }
+        cardCount[key]--
+        if (cardCount[key] === 0) {
+          delete cardCount[key]
+          keys.splice(keys.indexOf(key), 1)
+        }
+      }
+    }
+    return true
+  }
+</script>

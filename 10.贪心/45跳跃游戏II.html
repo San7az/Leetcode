@@ -1,0 +1,24 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var jump = function (nums) {
+    let jump = 0, // 表示跳跃次数
+      maxReach = 0,
+      lastJumpPos = 0, // 记录上一次跳跃后能到达的最远位置
+      n = nums.length
+    if (n === 1) {
+      return 0
+    }
+    for (let i = 0; i < n - 1; i++) {
+      maxReach = Math.max(maxReach, i + nums[i])
+      // 当前位置已经是上次跳跃能达到的最远位置，需要再进行一次跳跃
+      if (i === lastJumpPos) {
+        jump++
+        lastJumpPos = maxReach // 更新下次跳跃需要开始的位置
+      }
+    }
+    return jump
+  }
+</script>
