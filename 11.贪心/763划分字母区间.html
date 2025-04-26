@@ -1,0 +1,26 @@
+<script>
+  /**
+   * @param {string} s
+   * @return {number[]}
+   */
+  var partitionLabels = function (s) {
+    const lastSeen = {}
+    for (let i = 0; i < s.length; i++) {
+      // 记录每个字符最后一次出现的位置
+      lastSeen[s[i]] = i
+    }
+    const result = []
+    let start = 0,
+      end = 0
+    for (let i = 0; i < s.length; i++) {
+      // 更新end，以便它可以覆盖所有字符的最后一次出现位置
+      end = Math.max(end, lastSeen[s[i]])
+      // 当前位置i等于end，表示当前片段结束
+      if (i === end) {
+        result.push(end - start + 1)
+        start = i + 1
+      }
+    }
+    return result
+  }
+</script>

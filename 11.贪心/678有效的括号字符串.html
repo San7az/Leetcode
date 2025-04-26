@@ -1,0 +1,59 @@
+<script>
+  /**
+   * @param {string} s
+   * @return {boolean}
+   */
+  //   var checkValidString = function (s) {
+  //     // leftMin用来记录在最不利情况下（即尽量多使用星号作为左括号）剩余未匹配的左括号最小数量
+  //     // leftMax用来记录在最有利情况下（即尽量多使用星号作为右括号）剩余未匹配的左括号最大数量。
+  //     let leftMin = 0,
+  //       leftMax = 0
+  //     // 前向遍历，同时跟踪最小和最大可能的左括号数量
+  //     for (let char of s) {
+  //       if (char === '(') {
+  //         leftMax++
+  //         leftMin++
+  //       } else if (char === ')') {
+  //         if (leftMin > 0) {
+  //           leftMin--
+  //         }
+  //         leftMax--
+  //         // 如果最大左括号计数小于0，说明右括号过多
+  //         if (leftMax < 0) {
+  //           return false
+  //         }
+  //       } else {
+  //         if (leftMin > 0) {
+  //           leftMin--
+  //         }
+  //         leftMax++
+  //       }
+  //     }
+  //     return leftMin === 0
+  //   }
+  var checkValidString = function (s) {
+    let stack = [],
+      starStack = []
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === '(') {
+        stack.push(i)
+      } else if (s[i] === ')') {
+        if (stack.length > 0) {
+          stack.pop()
+        } else if (starStack.length > 0) {
+          starStack.pop()
+        } else {
+          return false
+        }
+      } else {
+        starStack.push(i)
+      }
+    }
+    while (stack.length > 0 && starStack.length > 0) {
+      if (stack.pop() > starStack.pop()) {
+        return false
+      }
+    }
+    return stack.length === 0
+  }
+</script>

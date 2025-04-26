@@ -1,0 +1,31 @@
+<script>
+  /**
+   * @param {string} s
+   * @return {string}
+   */
+  var removeDuplicateLetters = function (s) {
+    const lastOccurence = {}
+    const inStack = new Set()
+    const stack = []
+    for (let i = 0; i < s.length; i++) {
+      lastOccurence[s[i]] = i
+    }
+    for (let i = 0; i < s.length; i++) {
+      const char = s[i]
+      // 如果字符已经在栈中，则跳过
+      if (!inStack.has(char)) {
+        // 如果栈不为空且当前字符字典序更小，且栈顶字符在后面还会出现
+        while (
+          stack.length > 0 &&
+          char < stack[stack.length - 1] &&
+          lastOccurence[stack[stack.length - 1]] > i
+        ) {
+          inStack.delete(stack.pop())
+        }
+        inStack.add(char)
+        stack.push(char)
+      }
+    }
+    return stack.join('')
+  }
+</script>

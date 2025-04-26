@@ -1,0 +1,22 @@
+<script>
+  /**
+   * @param {number[][]} triplets
+   * @param {number[]} target
+   * @return {boolean}
+   */
+  var mergeTriplets = function (triplets, target) {
+    let canReach = [false, false, false]
+    for (let triplet of triplets) {
+      if (
+        triplet[0] <= target[0] &&
+        triplet[1] <= target[1] &&
+        triplet[2] <= target[2]
+      ) {
+        canReach[0] = canReach[0] || triplet[0] === target[0]
+        canReach[1] = canReach[1] || triplet[1] === target[1]
+        canReach[2] = canReach[2] || triplet[2] === target[2]
+      }
+    }
+    return canReach.every((item) => item)
+  }
+</script>
