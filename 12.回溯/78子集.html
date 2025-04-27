@@ -1,0 +1,22 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number[][]}
+   */
+  var subsets = function (nums) {
+    const result = []
+    const backtrack = (start, path) => {
+      // 将当前子集添加到结果集中
+      result.push([...path])
+      for (let i = start; i < nums.length; i++) {
+        path.push(nums[i])
+        // 递归调用，进入下一层决策树
+        backtrack(i + 1, path)
+        // 回溯，撤销选择，回到上一层决策树
+        path.pop()
+      }
+    }
+    backtrack(0, [])
+    return result
+  }
+</script>

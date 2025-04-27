@@ -1,0 +1,27 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number[][]}
+   */
+  var permute = function (nums) {
+    const result = []
+    const backtrack = (path, options) => {
+      if (options.length === 0) {
+        result.push([...path])
+        return
+      }
+      for (let i = 0; i < options.length; i++) {
+        const num = options[i]
+        path.push(num)
+        // 构建下一层决策树
+        backtrack(
+          path,
+          options.filter((_, index) => index !== i)
+        )
+        path.pop()
+      }
+    }
+    backtrack([], nums)
+    return result
+  }
+</script>
