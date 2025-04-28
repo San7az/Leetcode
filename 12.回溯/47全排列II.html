@@ -1,0 +1,27 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number[][]}
+   */
+  var permuteUnique = function (nums) {
+    nums.sort((a, b) => a - b)
+    const res = []
+    const backtrack = (path, options) => {
+      // options:剩余可选数字的集合
+      if (options.length === 0) {
+        res.push([...path])
+        return
+      }
+      for (let i = 0; i < options.length; i++) {
+        if (i > 0 && options[i] === options[i - 1]) {
+          continue
+        }
+        const newPath = [...path, options[i]]
+        const newOptions = [...options.slice(0, i), ...options.slice(i + 1)]
+        backtrack(newPath, newOptions)
+      }
+    }
+    backtrack([], nums)
+    return res
+  }
+</script>
