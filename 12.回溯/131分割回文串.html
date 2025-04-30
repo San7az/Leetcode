@@ -1,0 +1,38 @@
+<script>
+  /**
+   * @param {string} s
+   * @return {string[][]}
+   */
+  function isPalindrome(str) {
+    let left = 0,
+      right = str.length - 1
+    while (left < right) {
+      if (str[left] !== str[right]) {
+        return false
+      }
+      left++
+      right--
+    }
+    return true
+  }
+  function partition(s, start = 0, path = [], result = null) {
+    if (result === null) {
+      result = []
+    }
+    if (start === s.length) {
+      result.push([...path])
+      return result
+    }
+    for (let i = start; i < s.length; i++) {
+      if (isPalindrome(s.slice(start, i + 1))) {
+        path.push(s.slice(start, i + 1))
+        partition(s, i + 1, path, result)
+        path.pop()
+      }
+    }
+    return result
+  }
+  function partitionPalindromes(s) {
+    return partition(s)
+  }
+</script>
