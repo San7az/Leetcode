@@ -1,0 +1,40 @@
+<script>
+  /**
+   * @param {number} n
+   * @return {string[][]}
+   */
+  var solveNQueens = function (n) {
+    // 元素值代表该皇后所在的列，下标则代表行。
+    const solutions = []
+    const board = new Array(n).fill(-1) // 初始化棋盘，-1 表示未放置皇后
+    function isSafe(row, col) {
+      // 检查列是否有冲突
+      for (let i = 0; i < row; i++) {
+        if (board[i] === col || Math.abs(board[i] - col) === row - i) {
+          return false
+        }
+      }
+      return true
+    }
+    function backtrack(row) {
+      if (row === n) {
+        const solution = []
+        for (let i = 0; i < n; i++) {
+          const line = '.'.repeat(board[i]) + 'Q' + '.'.repeat(n - board[i] - 1)
+          solution.push(line)
+        }
+        solutions.push(solution)
+        return
+      }
+      for (let col = 0; col < n; col++) {
+        if (isSafe(row, col)) {
+          board[row] = col // 放置皇后
+          backtrack(row + 1)
+          board[row] = -1
+        }
+      }
+    }
+    backtrack(0)
+    return solutions
+  }
+</script>
