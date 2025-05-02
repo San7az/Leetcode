@@ -1,0 +1,38 @@
+<script>
+  /**
+   * @param {character[][]} grid
+   * @return {number}
+   */
+  var numIslands = function (grid) {
+    let isLandCount = 0
+    function dfs(i, j) {
+      // 检查边界和是否为陆地以及是否访问过
+      if (
+        i < 0 ||
+        j < 0 ||
+        i >= grid.length ||
+        j >= grid[0].length ||
+        grid[i][j] === '0'
+      ) {
+        return
+      }
+      // 标记为已访问
+      grid[i][j] = '0'
+      // 遍历上下左右相邻单元格
+      dfs(i - 1, j) // shang
+      dfs(i + 1, j)
+      dfs(i, j - 1)
+      dfs(i, j + 1)
+    }
+    // 遍历网格
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[0].length; j++) {
+        if (grid[i][j] === '1') {
+          isLandCount++
+          dfs(i, j)
+        }
+      }
+    }
+    return isLandCount
+  }
+</script>

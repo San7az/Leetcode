@@ -1,0 +1,32 @@
+<script>
+  /**
+   * // Definition for a _Node.
+   * function _Node(val, neighbors) {
+   *    this.val = val === undefined ? 0 : val;
+   *    this.neighbors = neighbors === undefined ? [] : neighbors;
+   * };
+   */
+
+  /**
+   * @param {_Node} node
+   * @return {_Node}
+   */
+  var cloneGraph = function (node) {
+    if (node === null) {
+      return
+    }
+    const visited = new Map()
+    function dfs(originalNode) {
+      if (visited.has(originalNode)) {
+        return visited.get(originalNode)
+      }
+      const cloneNode = new _Node(originalNode.val, [])
+      visited.set(originalNode, cloneNode)
+      for (const neighbor of originalNode.neighbors) {
+        cloneNode.neighbors.push(dfs(neighbor))
+      }
+      return cloneNode
+    }
+    return dfs(node)
+  }
+</script>
