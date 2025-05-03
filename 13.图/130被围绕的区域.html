@@ -1,0 +1,48 @@
+<script>
+  /**
+   * @param {character[][]} board
+   * @return {void} Do not return anything, modify board in-place instead.
+   */
+  var solve = function (board) {
+    if (!board || !board.length || !board[0].length) {
+      return
+    }
+    const outerLen = board.length
+    const innerLen = board[0].length
+    function dfs(r, c) {
+      if (
+        r < 0 ||
+        r >= outerLen ||
+        c < 0 ||
+        c >= innerLen ||
+        board[r][c] !== 'O'
+      ) {
+        return
+      }
+      board[r][c] = '#'
+      dfs(r - 1, c)
+      dfs(r + 1, c)
+      dfs(r, c - 1)
+      dfs(r, c + 1)
+    }
+    // 标记边界上的 O 及其相连的 O
+    for (let r = 0; r < outerLen; r++) {
+      dfs(r, 0)
+      dfs(r, innerLen - 1)
+    }
+    for (let c = 0; c < innerLen; c++) {
+      dfs(0, c)
+      dfs(outerLen - 1, c)
+    }
+    // 替换内部的 '0' 为 'X'
+    for (let r = 0; r < outerLen; r++) {
+      for (let c = 0; c < innerLen; c++) {
+        if (board[r][c] === 'O') {
+          board[r][c] = 'X'
+        } else if (board[r][c] === '#') {
+          board[r][c] = 'O'
+        }
+      }
+    }
+  }
+</script>

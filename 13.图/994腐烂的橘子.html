@@ -1,0 +1,54 @@
+<script>
+  /**
+   * @param {number[][]} grid
+   * @return {number}
+   */
+  var orangesRotting = function (grid) {
+    const outerLen = grid.length
+    const innerLen = grid[0].length
+    let freshOrange = 0
+    const queue = []
+    const direction = [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+    ]
+    let minutes = 0
+
+    // 初始化
+    for (let i = 0; i < outerLen; i++) {
+      for (let j = 0; j < innerLen; j++) {
+        if (grid[i][j] === 2) {
+          queue.push([i, j])
+        } else if (grid[i][j] === 1) {
+          freshOrange++
+        }
+      }
+    }
+
+    while (queue.length > 0 && freshOrange > 0) {
+      const size = queue.length
+      for (let i = 0; i < size; i++) {
+        const [r, c] = queue.shift()
+        for (let [dr, dc] of direction) {
+          const nr = r + dr
+          const nc = c + dc
+          if (
+            nr >= 0 &&
+            nr < outerLen &&
+            nc >= 0 &&
+            nc < innerLen &&
+            grid[nr][nc] === 1
+          ) {
+            grid[nr][nc] = 2
+            freshOrange--
+            queue.push([nr, nc])
+          }
+        }
+      }
+      minutes++
+    }
+    return freshOrange ? -1 : minutes
+  }
+</script>
