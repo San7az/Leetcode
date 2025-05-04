@@ -1,0 +1,40 @@
+<script>
+  /**
+   * @param {number} numCourses
+   * @param {number[][]} prerequisites
+   * @return {boolean}
+   */
+  var canFinish = function (numCourses, prerequisites) {
+    // Build adjacency list
+    const adjList = new Array(numCourses).fill(null).map(() => [])
+    for (const [course, prereq] of prerequisites) {
+      adjList[prereq].push(course)
+    }
+
+    // Calculate entry level for each course
+    const indegree = new Array(numCourses).fill(0)
+    prerequisites.forEach(([course]) => indegree[course]++)
+
+    // Topological sorting using queues
+    const queue = []
+    for (let i = 0; i < numCourses; i++) {
+      if (indegree[i] === 0) {
+        queue.push(i)
+      }
+    }
+
+    while (queue.length > 0) {
+      const course = queue.shift()
+      numCourses--
+
+      // Decrease the indegree of following courses
+      adjList[course].forEach((nextCourse) => {
+        indegree[nextCourse]--
+        if (indegree[nextCourse] === 0) {
+          queue.push(nextCourse)
+        }
+      })
+    }
+    return numCourses === 0
+  }
+</script>
