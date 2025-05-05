@@ -1,0 +1,46 @@
+<script>
+  /**
+   * @param {string} beginWord
+   * @param {string} endWord
+   * @param {string[]} wordList
+   * @return {number}
+   */
+  var ladderLength = function (beginWord, endWord, wordList) {
+    if (!wordList.includes(endWord)) {
+      return 0
+    }
+    const wordDict = new Set(wordList)
+    let frontSet = new Set([beginWord])
+    let backSet = new Set([endWord])
+    let length = 1
+
+    while (frontSet.size > 0 && backSet.size > 0) {
+      if (frontSet.size < backSet.size) {
+        // 交换frontSet和backSet，总是从前端较小的集合开始扩展
+        ;[frontSet, backSet] = [backSet, frontSet]
+      }
+      const nextFrontSet = new Set()
+      for (const word of frontSet) {
+        for (let i = 0; i < word.length; i++) {
+          // ASCII码'a'到'z'
+          for (let c = 97; c <= 122; c++) {
+            const nextWord =
+              word.substring(0, i) +
+              String.fromCharCode(c) +
+              word.substring(i + 1)
+            if (backSet.has(nextWord)) {
+              return length + 1
+            }
+            if (wordDict.has(nextWord)) {
+              nextFrontSet.add(nextWord)
+              wordDict.delete(nextWord)
+            }
+          }
+        }
+      }
+      frontSet = nextFrontSet
+      length++
+    }
+    return 0
+  }
+</script>
