@@ -1,0 +1,24 @@
+<script>
+  /**
+   * @param {number} n
+   * @return {number}
+   */
+  var climbStairs = function (n) {
+    // 处理边界条件
+    if (n === 1) {
+      return 1
+    }
+    if (n === 2) {
+      return 2
+    }
+    // 初始化dp数组
+    let dp = new Array(n + 1)
+    dp[1] = 1
+    dp[2] = 2
+    // 动态规划，自底向上计算
+    for (let i = 3; i <= n; i++) {
+      dp[i] = dp[i - 1] + dp[i - 2]
+    }
+    return dp[n]
+  }
+</script>

@@ -1,0 +1,25 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var rob = function (nums) {
+    if (nums.length === 0) {
+      return 0
+    }
+    if (nums.length === 1) {
+      return nums[0]
+    }
+    function robHouse(start, end) {
+      let prev = 0,
+        curr = 0
+      for (let i = start; i <= end; i++) {
+        let temp = curr
+        curr = Math.max(prev + nums[i], curr)
+        prev = temp
+      }
+      return curr
+    }
+    return Math.max(robHouse(0, nums.length - 2), robHouse(1, nums.length - 1))
+  }
+</script>

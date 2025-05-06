@@ -1,0 +1,15 @@
+<script>
+  /**
+   * @param {number[]} cost
+   * @return {number}
+   */
+  var minCostClimbingStairs = function (cost) {
+    // 初始化dp数组，长度比cost多1，用于存储到达最后一阶的最小花费
+    const dp = new Array(cost.length + 1)
+    dp[0] = dp[1] = 0
+    for (let i = 2; i <= cost.length; i++) {
+      dp[i] = Math.min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2])
+    }
+    return dp[cost.length]
+  }
+</script>
