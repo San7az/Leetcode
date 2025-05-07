@@ -1,0 +1,43 @@
+<script>
+  /**
+   * @param {string} s
+   * @return {string}
+   */
+  // 辅助函数，围绕中心扩展寻找回文串
+  function expandAroundCenter(s, left, right) {
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      left--
+      right++
+    }
+    return right - left - 1
+  }
+  var longestPalindrome = function (s) {
+    const n = s.length
+    if (n < 2) {
+      return s
+    }
+    // 初始化最长回文子串的起始位置和最大长度
+    let start = 0,
+      maxLength = 1
+    // 初始化dp数组，dp[i]表示以i为中心的最长回文子串的真正半径
+    const dp = new Array(n)
+    for (let i = 0; i < n; i++) {
+      // 奇数长度回文子串，以i为中心
+      dp[i] = expandAroundCenter(s, i, i)
+      // 偶数长度回文子串，以i和i+1为中心
+      if (i + 1 < n) {
+        const len2 = expandAroundCenter(s, i, i + 1)
+        dp[i + 1] = len2
+      }
+      if (dp[i] > maxLength) {
+        maxLength = dp[i]
+        start = i - Math.floor((dp[i] - 1) / 2)
+      }
+      if (i + 1 < n && dp[i + 1] > maxLength) {
+        maxLength = dp[i + 1]
+        start = i + 1 - Math.floor(dp[i + 1] / 2)
+      }
+    }
+    return s.substring(start, start + maxLength)
+  }
+</script>
