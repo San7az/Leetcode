@@ -1,0 +1,45 @@
+<script>
+  /**
+   * @param {string} s
+   * @param {string[]} wordDict
+   * @return {string[]}
+   */
+  var wordBreak = function (s, wordDict) {
+    const result = []
+    const dict = new Set(wordDict)
+    const n = s.length
+    // 动态规划数组，dp[i] 表示从 0 到 i 是否可以被分割
+    const dp = new Array(s.length + 1).fill(false)
+    dp[0] = true
+    // 记录到达每个位置 i 时所有可能的分割点
+    const prev = new Array(n + 1).fill(null)
+    prev[0] = []
+    // 填充dp数组
+    for (let i = 1; i <= n; i++) {
+      prev[i] = []
+      for (let j = 0; j < i; j++) {
+        if (dp[j] === true && dict.has(s.substring(j, i))) {
+          dp[i] = true
+          prev[i].push(j)
+        }
+      }
+    }
+    function buildSentence(index, currentSentence) {
+      if (index === 0) {
+        result.push(currentSentence)
+        return
+      }
+      for (let prevIndex of prev[index]) {
+        const word = s.substring(prevIndex, index)
+        buildSentence(
+          prevIndex,
+          word + (currentSentence ? ' ' + currentSentence : '')
+        )
+      }
+    }
+    if (dp[n]) {
+      buildSentence(n, '')
+    }
+    return result
+  }
+</script>
