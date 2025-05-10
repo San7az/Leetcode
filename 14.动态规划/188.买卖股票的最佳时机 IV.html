@@ -1,0 +1,38 @@
+<script>
+  /**
+   * @param {number} k
+   * @param {number[]} prices
+   * @return {number}
+   */
+  var maxProfit = function (k, prices) {
+    if (k >= prices.length / 2) {
+      return maxProfitUnlimited(prices)
+    }
+    const n = prices.length
+    // 创建一个二维数组 dp，其中 dp[t][d] 表示在第 d 天结束时进行了 t 次交易的最大利润
+    const dp = new Array(k + 1).fill(null).map(() => new Array(n).fill(0))
+    for (let t = 1; t <= k; t++) {
+      // 初始化 maxDiff 为 -prices[0]，即第一次买入股票的最大利润
+      let maxDiff = -prices[0]
+      // 从第一天开始遍历每一天 d
+      for (let d = 1; d < n; d++) {
+        // 更新 dp[t][d] 为前一个状态 dp[t][d - 1] 和 prices[d] + maxDiff 中较大的那个值
+        dp[t][d] = Math.max(dp[t][d - 1], prices[d] + maxDiff)
+        // 更新 maxDiff 为 dp[t - 1][d] - prices[d] 和当前 maxDiff 中较大的那个值
+        // 这里 dp[t - 1][d] - prices[d] 代表在第 d 天买入股票所能带来的最大利润
+        maxDiff = Math.max(dp[t - 1][d] - prices[d], maxDiff)
+      }
+    }
+    // 返回进行了 k 次交易后在最后一天的最大利润
+    return dp[k][n - 1]
+  }
+  function maxProfitUnlimited(prices) {
+    let profit = 0
+    for (let i = 1; i < prices.length; i++) {
+      if (prices[i] > prices[i - 1]) {
+        profit = profit + prices[i] - prices[i - 1]
+      }
+    }
+    return profit
+  }
+</script>

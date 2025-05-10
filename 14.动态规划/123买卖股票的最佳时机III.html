@@ -1,0 +1,29 @@
+<script>
+  /**
+   * @param {number[]} prices
+   * @return {number}
+   */
+  var maxProfit = function (prices) {
+    //   ○ f0 表示不持有股票，且没有进行过交易的最大利润。
+    //   ○ f1 表示持有股票，且最多进行过一次买入操作的最大利润。
+    //   ○ f2 表示不持有股票，且最多进行过一次买入和一次卖出操作的最大利润。
+    //   ○ f3 表示持有股票，且最多进行过两次买入操作的最大利润。
+    //   ○ f4 表示不持有股票，且最多进行过两次买入和两次卖出操作的最大利润。
+    let f0 = 0,
+      f1 = -Infinity,
+      f2 = 0,
+      f3 = -Infinity,
+      f4 = 0
+    for (let i = 0; i < prices.length; i++) {
+      // 第一次买入
+      f1 = Math.max(f1, -prices[i])
+      // 第一次卖出
+      f2 = Math.max(f2, f1 + prices[i])
+      // 第二次买入
+      f3 = Math.max(f3, f2 - prices[i])
+      // 第二次卖出
+      f4 = Math.max(f4, f3 + prices[i])
+    }
+    return f4
+  }
+</script>
