@@ -1,0 +1,50 @@
+<script>
+  /**
+   * @param {number[][]} points
+   * @return {number}
+   */
+  var minCostConnectPoints = function (points) {
+    const edges = []
+    const parents = new Array(points.length)
+    let cost = 0
+    // 初始化并查集
+    for (let i = 0; i < parents.length; i++) {
+      parents[i] = i
+    }
+    // 计算所有边的权重
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        const weight =
+          Math.abs(points[i][0] - points[j][0]) +
+          Math.abs(points[i][1] - points[j][1])
+        edges.push([i, j, weight])
+      }
+    }
+    // 排序边的权重
+    edges.sort((a, b) => a[2] - b[2])
+    // 查找并查集的根节点
+    function find(node) {
+      if (parents[node] !== node) {
+        parents[node] = find(parents[node])
+      }
+      return parents[node]
+    }
+    // 合并两个集合
+    function union(x, y) {
+      const rootX = find(x)
+      const rootY = find(y)
+      if (rootX !== rootY) {
+        parents[rootX] = rootY
+        return true
+      }
+      return false
+    }
+    // Kruskal算法构建MST
+    for (const [u, v, w] of edges) {
+      if (union(u, v)) {
+        cost = cost + w
+      }
+    }
+    return cost
+  }
+</script>

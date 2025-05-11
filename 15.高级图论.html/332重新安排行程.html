@@ -1,0 +1,31 @@
+<script>
+  /**
+   * @param {string[][]} tickets
+   * @return {string[]}
+   */
+  var findItinerary = function (tickets) {
+    const flights = {}
+    tickets.forEach((ticket) => {
+      if (!flights[ticket[0]]) {
+        flights[ticket[0]] = []
+      }
+      flights[ticket[0]].push(ticket[1])
+    })
+
+    // 对每个机场的目的地进行排序，以确保字典序最小的路径
+    Object.keys(flights).forEach((key) => {
+      flights[key].sort()
+    })
+
+    const result = []
+    function dfs(airport) {
+      while (flights[airport] && flights[airport].length > 0) {
+        const next = flights[airport].shift()
+        dfs(next)
+      }
+      result.unshift(airport)
+    }
+    dfs('JFK')
+    return result
+  }
+</script>

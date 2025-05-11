@@ -1,0 +1,38 @@
+<script>
+  /**
+   * @param {number[][]} times
+   * @param {number} n
+   * @param {number} k
+   * @return {number}
+   */
+  var networkDelayTime = function (times, n, k) {
+    const graph = Array.from({ length: n }, () => [])
+    const dist = new Array(n).fill(Infinity)
+    // 节点编号从1开始，数组索引从0开始
+    dist[k - 1] = 0
+    // 优先级队列，存放待访问的节点
+    const pq = []
+    // 构建邻接表
+    for (const [u, v, w] of times) {
+      graph[u - 1].push([v - 1, w])
+    }
+    // 初始化优先级队列 [distance, node]
+    pq.push([0, k - 1])
+    while (pq.length > 0) {
+      // 每次取最小距离的节点
+      pq.sort((a, b) => a[0] - b[0])
+      const [d, u] = pq.shift()
+      if (d > dist[u]) {
+        continue
+      }
+      for (const [v, w] of graph[u]) {
+        if (dist[v] > dist[u] + w) {
+          dist[v] = dist[u] + w
+          pq.push([dist[v], v])
+        }
+      }
+    }
+    const maxDist = Math.max(...dist)
+    return maxDist === Infinity ? -1 : maxDist
+  }
+</script>
