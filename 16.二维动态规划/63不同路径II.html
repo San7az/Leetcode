@@ -1,0 +1,29 @@
+<script>
+  /**
+   * @param {number[][]} obstacleGrid
+   * @return {number}
+   */
+  var uniquePathsWithObstacles = function (obstacleGrid) {
+    const outerLen = obstacleGrid.length
+    const innerLen = obstacleGrid[0].length
+    const dp = Array.from({ length: outerLen }, () => Array(innerLen).fill(0))
+
+    // 初始化 dp 数组的第一行和第一列
+    for (let i = 0; i < outerLen && obstacleGrid[i][0] === 0; i++) {
+      dp[i][0] = 1
+    }
+    for (let j = 0; j < innerLen && obstacleGrid[0][j] === 0; j++) {
+      dp[0][j] = 1
+    }
+
+    // 填充 dp 数组
+    for (let i = 1; i < outerLen; i++) {
+      for (let j = 1; j < innerLen; j++) {
+        if (obstacleGrid[i][j] === 0) {
+          dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+        }
+      }
+    }
+    return dp[outerLen - 1][innerLen - 1]
+  }
+</script>
