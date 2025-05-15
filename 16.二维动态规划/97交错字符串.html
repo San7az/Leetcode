@@ -1,0 +1,38 @@
+<script>
+  /**
+   * @param {string} s1
+   * @param {string} s2
+   * @param {string} s3
+   * @return {boolean}
+   */
+  var isInterleave = function (s1, s2, s3) {
+    const len1 = s1.length,
+      len2 = s2.length,
+      len3 = s3.length
+    // 判断长度是否匹配
+    if (len1 + len2 !== len3) {
+      return false
+    }
+    // dp[i][j] 表示 s1 的前 i 个字符和 s2 的前 j 个字符能否交错形成 s3 的前 i+j 个字符
+    const dp = Array.from({ length: len1 + 1 }, () =>
+      new Array(len2 + 1).fill(false)
+    )
+    dp[0][0] = true
+    // 初始化第一行和第一列
+    for (let i = 1; i <= len1; i++) {
+      dp[i][0] = dp[i - 1][0] && s1[i - 1] === s3[i - 1]
+    }
+    for (let j = 1; j <= len2; j++) {
+      dp[0][j] = dp[0][j - 1] && s2[j - 1] === s3[j - 1]
+    }
+    // 填充 dp 数组
+    for (let i = 1; i <= len1; i++) {
+      for (let j = 1; j <= len2; j++) {
+        dp[i][j] =
+          (dp[i - 1][j] && s1[i - 1] === s3[i + j - 1]) ||
+          (dp[i][j - 1] && s2[j - 1] === s3[i + j - 1])
+      }
+    }
+    return dp[len1][len2]
+  }
+</script>
