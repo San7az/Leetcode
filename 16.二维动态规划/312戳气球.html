@@ -1,0 +1,25 @@
+<script>
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  var maxCoins = function (nums) {
+    const n = nums.length
+    const extendNums = [1, ...nums, 1]
+    const dp = Array.from({ length: n + 2 }, () => Array(n + 2).fill(0))
+    for (let len = 1; len <= n; len++) {
+      for (let left = 1; left <= n - len + 1; left++) {
+        const right = left + len - 1
+        for (let k = left; k <= right; k++) {
+          const coins =
+            extendNums[left - 1] * extendNums[k] * extendNums[right + 1]
+          dp[left][right] = Math.max(
+            dp[left][right],
+            coins + dp[left][k - 1] + dp[k + 1][right]
+          )
+        }
+      }
+    }
+    return dp[1][n]
+  }
+</script>
