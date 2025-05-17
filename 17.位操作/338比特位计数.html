@@ -1,0 +1,14 @@
+<script>
+  /**
+   * @param {number} n
+   * @return {number[]}
+   */
+  var countBits = function (n) {
+    const dp = new Array(n + 1).fill(0)
+    for (let i = 1; i <= n; i++) {
+      const lowBit = i & -i
+      dp[i] = dp[i - lowBit] + 1
+    }
+    return dp
+  }
+</script>
